@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <string>
 #include <map>
 #include "ROBDD.h"
@@ -40,7 +40,7 @@ int main()
 	}
 	for (int i = 0; i < n; i++)
 	{
-		cout << "Input true vertices for symbol " << graph_to_sym[i] << ", -1 indicates end";
+		cout << "Input true vertices for symbol " << graph_to_sym[i] << ", -1 indicates end" << endl;
 		int vert;
 		vector<int> table;
 		while(1)
