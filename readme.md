@@ -1099,7 +1099,7 @@ int main()
 	}
 	for (int i = 0; i < n; i++)
 	{
-		cout << "Input true vertices for symbol " << graph_to_sym[i] << ", -1 indicates end";
+		cout << "Input true vertices for symbol " << graph_to_sym[i] << ", -1 indicates end" << endl;
 		int vert;
 		vector<int> table;
 		while(1)
@@ -1268,7 +1268,8 @@ Input the source node and destination node of each edge respectively:
 2 1
 2 3
 3 0
-Input true vertices for symbol p, -1 indicates end3
+Input true vertices for symbol p, -1 indicates end
+3
 -1
 Input your expression(input exit to quit):
 AF(p)
@@ -1522,7 +1523,7 @@ Result:
 2(tests x1)  ----True---->  1(True)
 3  stands for False
 ```
-这和ROBDD每一步迭代结果相吻合。
+这和ROBDD每一步迭代结果相吻合（注意Result是$t_3$取反得到的，EG运算结果正是$t_3$）。
 ![](imgs/eg2.PNG)  
 其中$t_3=t_2$。
 ## 注
