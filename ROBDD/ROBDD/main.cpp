@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <string>
 #include <map>
 #include "ROBDD.h"
@@ -87,58 +87,58 @@ ROBDD parse(string expression)
 	{
 		string remainder = expression.substr(pos, expression.length() - pos);
 		int comma = remainder.find(',', 0);
-		string expr1 = remainder.substr(0, comma);
-		string expr2 = remainder.substr(comma, remainder.length() - comma);
+		string expr1 = remainder.substr(1, comma - 1);
+		string expr2 = remainder.substr(comma + 1, remainder.length() - comma - 2);
 		return AND(parse(expr1), parse(expr2));
 	}
 	else if (op == "or" || op == "OR")
 	{
 		string remainder = expression.substr(pos, expression.length() - pos);
 		int comma = remainder.find(',', 0);
-		string expr1 = remainder.substr(0, comma);
-		string expr2 = remainder.substr(comma, remainder.length() - comma);
+		string expr1 = remainder.substr(1, comma - 1);
+		string expr2 = remainder.substr(comma + 1, remainder.length() - comma - 2);
 		return OR(parse(expr1), parse(expr2));
 	}
 	else if (op == "imply" || op == "IMPLY")
 	{
 		string remainder = expression.substr(pos, expression.length() - pos);
 		int comma = remainder.find(',', 0);
-		string expr1 = remainder.substr(0, comma);
-		string expr2 = remainder.substr(comma, remainder.length() - comma);
+		string expr1 = remainder.substr(1, comma - 1);
+		string expr2 = remainder.substr(comma + 1, remainder.length() - comma - 2);
 		return IMPLY(parse(expr1), parse(expr2));
 	}
 	else if (op == "ex" || op == "EX")
 	{
-		string remainder = expression.substr(pos, expression.length() - pos);
+		string remainder = expression.substr(pos + 1, expression.length() - pos - 2);
 		return EX(total_graph, parse(remainder));
 	}
 	else if (op == "eg" || op == "EG")
 	{
-		string remainder = expression.substr(pos, expression.length() - pos);
+		string remainder = expression.substr(pos + 1, expression.length() - pos - 2);
 		return EG(total_graph, parse(remainder));
 	}
 	else if (op == "eu" || op == "EU")
 	{
-		string remainder = expression.substr(pos, expression.length() - pos);
+		string remainder = expression.substr(pos + 1, expression.length() - pos - 2);
 		int comma = remainder.find(',', 0);
 		string expr1 = remainder.substr(0, comma);
-		string expr2 = remainder.substr(comma, remainder.length() - comma);
+		string expr2 = remainder.substr(comma + 1, remainder.length() - comma);
 		return EU(total_graph, parse(expr1), parse(expr2));
 	}
 	else if (op == "not" || op == "NOT")
 	{
-		string remainder = expression.substr(pos, expression.length() - pos);
+		string remainder = expression.substr(pos + 1, expression.length() - pos - 2);
 		return NOT(parse(remainder));
 	}
 	else if (op == "af" || op == "AF") //AF p=~EG~p
 	{
-		string remainder = expression.substr(pos, expression.length() - pos);
-		cout << "AF(" << remainder << ")=NOT(EG(NOT" << remainder << ")))" << endl;
+		string remainder = expression.substr(pos + 1, expression.length() - pos - 2);
+		cout << "AF(" << remainder << ")=NOT(EG(NOT(" << remainder << ")))" << endl;
 		return NOT(EG(total_graph,NOT(parse(remainder))));
 	}
 	else if (op == "ax" || op == "AX") //AX p=~EX~p
 	{
-		string remainder = expression.substr(pos, expression.length() - pos);
+		string remainder = expression.substr(pos + 1, expression.length() - pos - 2);
 		cout << "AX(" << remainder << ")=NOT(EX(NOT" << remainder << ")))" << endl;
 		return NOT(EX(total_graph, NOT(parse(remainder))));
 	}
@@ -150,7 +150,7 @@ ROBDD parse(string expression)
 		NewNode->value.value = 0;
 		robdd_true.nodes.push_back(NewNode);
 		robdd_true.root = NewNode;
-		string remainder = expression.substr(pos, expression.length() - pos);
+		string remainder = expression.substr(pos + 1, expression.length() - pos - 2);
 		cout << "EF(" << remainder << ")=E(⊤ U " << remainder << ")" << endl;
 		return EU(total_graph, robdd_true, parse(remainder));
 	}
@@ -162,7 +162,7 @@ ROBDD parse(string expression)
 		NewNode->value.value = 0;
 		robdd_true.nodes.push_back(NewNode);
 		robdd_true.root = NewNode;
-		string remainder = expression.substr(pos, expression.length() - pos);
+		string remainder = expression.substr(pos + 1, expression.length() - pos - 2);
 		cout << "AG(" << remainder << ")=NOT(E(⊤ U NOT(" << remainder << ")))" << endl;
 		return NOT(EU(total_graph, robdd_true, NOT(parse(remainder))));
 	}
